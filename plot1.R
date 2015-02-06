@@ -1,0 +1,17 @@
+setwd("~/R/workspace/ExploratoryDataAnalisys/project1")
+data<-read.csv('household_power_consumption.txt',header = TRUE,sep = ';',na.string='?')
+data$Date<-paste(data$Date,data$Time,sep=' ')
+data<-data[,c(1,3,4,5,6,7,8,9)]
+data$Date<-strptime(data$Date,format = '%d/%m/%Y %H:%M:%S')
+na.omit(data)
+data<-data[data$Date>'2007-01-01' & data$Date<'2007-02-02',]
+data$Global_active_power<-as.numeric(data$Global_active_power)
+data$Global_reactive_power<-as.numeric(data$Global_reactive_power)
+data$Voltage<-as.numeric(data$Voltage)
+data$Global_intensity<-as.numeric(data$Global_intensity)
+data$Sub_metering_1<-as.numeric(data$Sub_metering_1)
+data$Sub_metering_2<-as.numeric(data$Sub_metering_2)
+data$Sub_metering_3<-as.numeric(data$Sub_metering_3)
+png(filename = 'plot1.png')
+hist(data$Global_active_power,col='red',xlab = 'Global Active Power (kilowatts)',main = 'Global Active Power')
+dev.off()
